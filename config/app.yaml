@@ -1,0 +1,38 @@
+hazelcast:
+  filePath: ${HAZELCAST_FILE_PATH | config/hazelcast-local.xml}
+  props:
+    hazelcast.cluster.name: ${HAZELCAST_CLUSTER_NAME | befitter-cluster}
+    hazelcast.listen.interface: ${HAZELCAST_LISTEN_INTERFACE | 127.0.0.1}
+
+eventBus:
+  host: ${VERTX_EVENTBUS_HOST | localhost}
+  port: ${VERTX_EVENTBUS_PORT | 10008}
+
+database:
+  hostAddresses: ${BEF_PETRACE_DB_HOST | localhost}
+  port: ${BEF_PETRACE_DB_PORT | 5432 }
+  name: ${BEF_PETRACE_DB_NAME | deodd_v4}
+  user: ${BEF_PETRACE_DB_USER | deodd}
+  password: ${BEF_PETRACE_DB_PASSWORD | 12345678}
+  connectionScheme: ${BEF_PETRACE_CONNECTION_SCHEME | postgres-steady}
+  useSSL: ${BEF_PETRACE_USE_SSL | false}
+  pemRootCaPath: ${BEF_PETRACE_PEM_ROOT_CA_PATH | }
+
+http:
+  baseUrl: ${BEF_PETRACE_BASE_URL | }
+  host: ${BEF_PETRACE_HOST | localhost}
+  port: ${BEF_PETRACE_PORT | 8080}
+
+redis:
+  host: ${BEF_PETRACE_REDIS_HOST | localhost}
+  port: ${BEF_PETRACE_REDIS_PORT | 6379}
+
+auth:
+  loginKeypair:
+    privateKey: ${LOGIN_PRIVATE_KEY | private}
+    publicKey: ${LOGIN_PUBLIC_KEY | public}
+  accessTokenExpirationMillis: ${ACCESS_TOKEN_EXPIRED_MILLIS | 300_000}
+  refreshTokenExpirationMillis: ${REFRESH_TOKEN_EXPIRED_MILLIS | 15_552_000_000}
+  cleanUpSessionMillis: ${CLEAN_UP_SESSION_MILLIS | 86_400_000}
+
+adminUsers: "${ADMIN_USERS | user-id-1}"

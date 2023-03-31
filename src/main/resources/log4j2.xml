@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN" monitorInterval="30">
+
+    <Properties>
+        <Property name="log-path">logs/</Property>
+        <Property name="blank-pattern">%msg%n</Property>
+        <Property name="only-thread-name-pattern">%t -> %msg%n</Property>
+        <Property name="default-pattern">%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n</Property>
+        <Property name="debug-pattern">%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} (%F:%L) - %msg%n</Property>
+    </Properties>
+
+    <Appenders>
+
+        <Console name="Console" target="SYSTEM_OUT" follow="true">
+            <PatternLayout pattern="${debug-pattern}"/>
+        </Console>
+
+        <RollingFile name="debugLog" fileName="${log-path}/debug.log"
+                     filePattern="${log-path}/debug-%d{yyyy-MM-dd}-%d{HH}-%i.log">
+            <!--            <LevelRangeFilter minLevel="TRACE" maxLevel="ERROR"/>-->
+            <PatternLayout pattern="${debug-pattern}"/>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="63500KB" />
+            </Policies>
+            <DefaultRolloverStrategy max="10"/>
+        </RollingFile>
+
+        <RollingFile name="errorLog" fileName="${log-path}/error.log"
+                     filePattern="${log-path}/error-%d{yyyy-MM-dd}-%d{HH}-%i.log">
+            <!-- Matches only ERROR level -->
+            <LevelRangeFilter minLevel="ERROR" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout pattern="${debug-pattern}"/>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="19500KB" />
+            </Policies>
+            <DefaultRolloverStrategy max="10"/>
+        </RollingFile>
+
+    </Appenders>
+
+    <Loggers>
+        <Logger name="io.versehub" level="debug" additivity="false">
+            <AppenderRef ref="debugLog" />
+            <AppenderRef ref="errorLog" />
+            <AppenderRef ref="Console"  />
+        </Logger>
+
+        <Logger name="io.vertx.ext.web.impl.RouterImpl" level="trace" additivity="false">
+            <AppenderRef ref="debugLog" />
+        </Logger>
+
+        <Root level="all">
+            <AppenderRef ref="Console"/>
+        </Root>
+    </Loggers>
+
+</Configuration>
